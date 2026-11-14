@@ -1,0 +1,32 @@
+name: Build JpCv plugin
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Get OpenUtau source
+        run: git clone --depth 1 https://github.com/stakira/OpenUtau.git
+
+      - name: Build OpenUtau.Core
+        run: dotnet build OpenUtau/OpenUtau.Core/OpenUtau.Core.csproj -c Release
+
+      - name: Build plugin
+        run: |
+          CORE=$(find "$PWD/OpenUtau/OpenUtau.Core/bin" -name OpenUtau.Core.dll | head -1)
+          echo "Using $CORE"
+          dotnet build OpenUtau.Plugin.JpCv.csproj -c Release -p:OpenUtauCore="$CORE"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OpenUtau.Plugin.JpCv
+          path: bin/Release/**/OpenUtau.Plugin.JpCv.dll

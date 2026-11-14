@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Match the .NET version your OpenUtau build uses (net8.0 for recent releases). -->
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>OpenUtau.Plugin.JpCv</AssemblyName>
+    <RootNamespace>OpenUtau.Plugin.JpCv</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Point this at OpenUtau.Core.dll inside your OpenUtau install folder. -->
+    <Reference Include="OpenUtau.Core">
+      <HintPath>C:\Path\To\OpenUtau\OpenUtau.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
